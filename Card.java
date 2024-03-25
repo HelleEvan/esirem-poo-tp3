@@ -8,7 +8,8 @@ public class Card {
         value = 0;
     }
     public Card(int _value,String _color){
-
+        this.color = _color;
+        this.value = _value;
     }
     public int value_card(){
         // génération d'un nombre > 0 et < 14
@@ -17,10 +18,11 @@ public class Card {
         return value;
 
     }
-    public void color_card(){
+    public int color_card(){
         // génération d'un nombre >= 0 et < 4
         Random r = new Random();
         int n = r.nextInt(4);
+        return n;
     }
     public String color_association(int value_color ){
         //association de la valeur à un couleur
@@ -44,7 +46,8 @@ public class Card {
         //generation d'une carte et ses attributs
         Card carte = new Card();
         value = carte.value_card();
-        color = carte.color_card();
+        int color_card = carte.color_card();
+        color = carte.color_association(color_card);
         return carte;
     }
 
