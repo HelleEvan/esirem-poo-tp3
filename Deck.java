@@ -48,6 +48,12 @@ public class Deck extends Card{
             tab_card.set(i,tmp1);
         }
     }
+    public void add_card(Card carte){
+        //ajout d'une carte au bout d'une pile de carte
+        tab_card.add(carte);
+    }
+    public void draw_card(){
 
+    }
 
 }
