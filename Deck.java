@@ -9,6 +9,7 @@ public class Deck extends Card{
         //constructeur par defaut
         Card carte1 = new Card();
         tab_card.add(carte1);
+        tab_card.remove(0);
     }
     public void game_deck(){
         //on va creer le jeu de carte
@@ -22,7 +23,6 @@ public class Deck extends Card{
 
             }
         }
-        tab_card.remove(0);
     }
     public ArrayList<Card> get_deck(){
         return tab_card;
