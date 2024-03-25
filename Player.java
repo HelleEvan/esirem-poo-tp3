@@ -4,7 +4,7 @@ public class Player {
     private boolean is_dealer;
     private Deck player_deck;
     private int money;
-
+    //ceal est un commentaire
     public Player(String _name, Deck _player_deck, boolean _is_dealer){
         name =_name;
         player_deck=_player_deck;
