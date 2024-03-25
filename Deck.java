@@ -52,7 +52,12 @@ public class Deck extends Card{
         //ajout d'une carte au bout d'une pile de carte
         tab_card.add(carte);
     }
-    public void draw_card(){
+    public Card draw_card(){
+        Card carte_withdrew =new Card();
+        int size = tab_card.size();
+        carte_withdrew = tab_card.get(size-1);
+        tab_card.remove(size-1);
+        return carte_withdrew;
 
     }
 
