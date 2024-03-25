@@ -1,5 +1,7 @@
 
 import java.util.ArrayList;
+import java.util.Random;
+
 public class Deck extends Card{
     private ArrayList<Card> tab_card = new ArrayList<Card>();
     //constucteur par defaut
@@ -32,6 +34,19 @@ public class Deck extends Card{
     }
     public void shuffle(){
 
+        for(int i=0;i<tab_card.size();i++){
+            // génération d'un nombre >= 0 et < 53
+            Random r = new Random();
+            int n = r.nextInt(52);
+
+            Card tmp =new Card();
+            Card tmp1 =new Card();
+
+            tmp= tab_card.get(i);
+            tmp1 = tab_card.get(n);
+            tab_card.set(n,tmp);
+            tab_card.set(i,tmp1);
+        }
     }
 
 
