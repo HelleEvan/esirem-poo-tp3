@@ -28,16 +28,16 @@ public class Card {
         //association de la valeur à un couleur
         switch (value_color){
             case 0:
-                color = "Coeur";
+                color = "♥";
                 break;
             case 1:
-                color = "Carreau";
+                color = "♦";
                 break;
             case 2:
-                color = "Pique";
+                color = "♠";
                 break;
             case 3:
-                color = "Trefle";
+                color = "♣";
 
         }
         return color;
