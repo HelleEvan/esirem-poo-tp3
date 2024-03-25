@@ -40,5 +40,8 @@ public class Player {
     public void bet(){  this.money= this.money-1; }
     public void bet(int _amout){this.money=this.money - _amout; }
 
+    public void draw_card(Deck _deck){
+        player_deck.add_card(_deck.draw_card());
+    }
 
 }
