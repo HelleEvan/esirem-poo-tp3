@@ -1,11 +1,14 @@
 import java.util.Random;
 public class Card {
-    private int card;
     private String color;
     private int value;
 
     public Card(){
-        card=0;
+        color = "";
+        value = 0;
+    }
+    public Card(int _value,String _color){
+
     }
     public int value_card(){
         // génération d'un nombre > 0 et < 14
@@ -14,12 +17,14 @@ public class Card {
         return value;
 
     }
-    public String color_card(){
+    public void color_card(){
         // génération d'un nombre >= 0 et < 4
         Random r = new Random();
         int n = r.nextInt(4);
+    }
+    public String color_association(int value_color ){
         //association de la valeur à un couleur
-        switch (n){
+        switch (value_color){
             case 0:
                 color = "Coeur";
                 break;
@@ -51,4 +56,11 @@ public class Card {
         return value;
     }
 
+    public void set_color(String _color) {
+        this.color = _color;
+    }
+
+    public void set_value(int _value) {
+        this.value = _value;
+    }
 }
