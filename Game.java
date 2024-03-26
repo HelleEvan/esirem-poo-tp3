@@ -24,7 +24,7 @@ public class Game {
             continue_game();
 
         } else if (user_response == "n") {
-            end_game();
+            end_game_draw();
         }
 
     }
@@ -68,8 +68,10 @@ public class Game {
     public void end_game(Player _winner,Player _loser){
         winner(_winner);
         loser(_loser);
-
     };
+    public void end_game_draw(){
+        System.out.println("Match nul");
+    }
 
     public void winner(Player _winner){
         _winner.add_money(bank);
