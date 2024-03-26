@@ -45,4 +45,8 @@ public class Player {
         player_deck.add_card(_deck.draw_card());
     }
 
+    public void add_money(int _money_to_add){
+        this.money +=_money_to_add;
+    }
+
 }
