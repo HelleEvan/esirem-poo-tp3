@@ -52,21 +52,29 @@ public class Game {
                 sum_deck_player1 += player1.get_player_deck().get_deck().get(i).get_value();
                 sum_deck_player2 += player2.get_player_deck().get_deck().get(i).get_value();
             }
+            if (sum_deck_player1 == 21){
+
+            }
         }
         //condition de fin de partie
         if (sum_deck_player1 >21) {
-            System.out.println("Vous avez perdu!");
-            player2.add_money(bank);
-            end_game();
+            end_game(player2,player1);
         }
         if (sum_deck_player2 >21) {
-            System.out.println("Vous avez perdu!");
-            player1.add_money(bank);
-            end_game();
+            end_game(player1,player2);
         }
 
     }
-    public void end_game(){
+    public void end_game(Player _winner,Player _loser){
+        winner(_winner);
+        loser(_loser);
 
     };
+
+    public void winner(Player _winner){
+        _winner.add_money(bank);
+    }
+    public void loser(Player _loser){
+        System.out.println("Vous avez perdu!");
+    }
 }
