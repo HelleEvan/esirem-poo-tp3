@@ -111,6 +111,7 @@ public class Card {
             case 9:
             case 10:
                 value = _value;
+                break;
             case 11:
             case 12:
             case 13:

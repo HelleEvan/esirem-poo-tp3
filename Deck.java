@@ -17,12 +17,7 @@ public class Deck extends Card{
             for (int j = 0; j < 4; j++) {
                 Card carte = new Card();
                 String color_tmp = carte.color_association(j);
-                if(i>9) {
-                    carte.set_value(10);
-                }
-                else{
-                    carte.set_value(i);
-                }
+                carte.set_value(i);
                 carte.set_color(color_tmp);
                 tab_card.add(carte);
 

@@ -59,6 +59,7 @@ public class Game {
     public void continue_game(int _player_bet) {
         //cretion du la pile de carte, puis shuffle
         Deck game_deck = new Deck();
+        Card carte = new Card();
         game_deck.game_deck();
         game_deck.shuffle();
 
@@ -70,7 +71,7 @@ public class Game {
         boolean player_draw;
         boolean dealer_draw;
         //condition pour que la partie continue
-        while(sum_deck_player1 <22 && sum_deck_player2 <22) {
+        while(sum_deck_player1 <=21 && sum_deck_player2 <=21) {
 
             round +=1;
             System.out.println("\nround n°"+round);
@@ -106,8 +107,9 @@ public class Game {
 
             int value1 = player1.get_player_deck().get_deck().get(size_deck_player-1).get_value();
             int value2 = dealer.get_player_deck().get_deck().get(size_deck_dealer-1).get_value();
-            String number1 = player1.get_player_deck().get_deck().get(size_deck_player-1).number_association(value1);
-            String number2 = dealer.get_player_deck().get_deck().get(size_deck_dealer-1).number_association(value2);
+            String number1 = carte.number_association(value1);
+            String number2 = carte.number_association(value2);
+
             if(player_draw){
                 System.out.println("Carte pioché: "+ number1 +player1.get_player_deck().get_deck().get(size_deck_player-1).get_color());
             }
@@ -124,11 +126,15 @@ public class Game {
             //recuperation de la valeur du deck de chaque joueur
             sum_deck_player1 =0;
             sum_deck_player2 =0;
+            int value_card_player;
+            int value_card_dealer;
             for (int i = 0; i < size_deck_player; i++) {
-                sum_deck_player1 += player1.get_player_deck().get_deck().get(i).get_value();
+                value_card_player= player1.get_player_deck().get_deck().get(i).get_value();
+                sum_deck_player1+= carte.conv_value(value_card_player);
             }
             for (int i = 0; i < size_deck_dealer; i++) {
-                sum_deck_player2 += dealer.get_player_deck().get_deck().get(i).get_value();
+                value_card_dealer = dealer.get_player_deck().get_deck().get(i).get_value();
+                sum_deck_player2 +=carte.conv_value(value_card_dealer);
             }
             System.out.println("La somme de votre main est: "+sum_deck_player1);
             System.out.println("La somme de la main du croupier: "+sum_deck_player2);
