@@ -99,14 +99,6 @@ public class Card {
         return number;
     }
 
-    public int conv_head(){
-        //convertir les tetes pour que leur valeur soit à 10
-        if(value==11 || value==12 || value==13){
-            value=10;
-        }
-        return value;
-    }
-
     public String get_color() {
         return color;
     }
