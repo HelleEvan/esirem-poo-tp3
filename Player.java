@@ -5,10 +5,11 @@ public class Player {
     private Deck player_deck;
     private int money;
     //ceal est un commentaire
-    public Player(String _name, Deck _player_deck, boolean _is_dealer){
-        name =_name;
-        player_deck=_player_deck;
-        is_dealer =_is_dealer;
+    public Player(String _name, Deck _player_deck, boolean _is_dealer,int _money){
+        this.name =_name;
+        this.player_deck=_player_deck;
+        this.is_dealer =_is_dealer;
+        this.money=_money;
     }
 
     //getter
@@ -42,6 +43,10 @@ public class Player {
 
     public void draw_card(Deck _deck){
         player_deck.add_card(_deck.draw_card());
+    }
+
+    public void add_money(int _money_to_add){
+        this.money +=_money_to_add;
     }
 
 }
