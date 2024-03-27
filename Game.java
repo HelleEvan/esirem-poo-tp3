@@ -49,20 +49,20 @@ public class Game {
             bank+=user_bet;
             System.out.println("Il vous reste désormais "+player1_bank+" coins");
 
-            continue_game();
+            continue_game(user_bet);
 
         } else if (user_response.equals("n")) {
             end_game_draw();
         }
 
     }
-    public void continue_game() {
+    public void continue_game(int _player_bet) {
         //cretion du la pile de carte, puis shuffle
         Deck game_deck = new Deck();
         game_deck.game_deck();
         game_deck.shuffle();
 
-        bank =0;
+
         int sum_deck_player1 =0;
         int sum_deck_player2 =0;
         //condition pour que la partie continue
@@ -84,28 +84,49 @@ public class Game {
 
             }
         }
-        //condition de fin de partie
-        if (sum_deck_player1 >21) {
-            end_game(dealer,player1);
-        }
-        if (sum_deck_player2 >21) {
-            end_game(player1, dealer);
-        }
+        end_game(sum_deck_player1,sum_deck_player2, _player_bet);
 
     }
-    public void end_game(Player _winner,Player _loser){
-        winner(_winner);
-        loser(_loser);
+    public void end_game(int _sum_deck_player1, int _sum_deck_player2, int _player_bet){
+        if(player1.get_player_deck().is_blackjack()){
+            if (dealer.get_player_deck().is_blackjack()){
+                player1.add_money(_player_bet);
+                bank-=_player_bet;
+                end_game_draw();
+            }
+            else {
+                player1.add_money(_player_bet+(_player_bet/2));
+                bank-=_player_bet+(_player_bet/2);}
+
+        }
+
+        if (_sum_deck_player1 >21){
+            System.out.println("Vous avez plus que 21 points! Vous avez donc perdu votre mise de " +_player_bet+" !");
+        }
+        //les joueurs qui ont 21 points ou moins sans blackjack
+        if (_sum_deck_player1<=21 && !player1.get_player_deck().is_blackjack()){
+            if (_sum_deck_player2>21){
+                player1.add_money(_player_bet);
+            }
+            if (_sum_deck_player2<21){
+                if (_sum_deck_player1<_sum_deck_player2){
+                    System.out.println("Vous avez moins de points que le croupier! Vous avez donc perdu votre mise de "+_player_bet+" !");
+                }
+                if (_sum_deck_player1 == _sum_deck_player2){
+                    System.out.println("PUSH !! Vous avez autant de points que le croupier ! Vous recuperer donc votre mise de "+_player_bet+" !");
+                    player1.add_money(_player_bet);
+                    bank-=_player_bet;
+                }
+                if (_sum_deck_player1>_sum_deck_player2){
+                    System.out.println("Vous avez plus de points que le croupier ! Vous recuperer donc votre mise de "+_player_bet+" !");
+                    player1.add_money(_player_bet);
+                    bank-=_player_bet;
+                }
+            }
+        }
     };
     public void end_game_draw(){
         System.out.println("Match nul");
-    }
-
-    public void winner(Player _winner){
-        _winner.add_money(bank);
-    }
-    public void loser(Player _loser){
-        System.out.println("Vous avez perdu!");
     }
 
     public void assurance(int player_bet){
@@ -118,6 +139,7 @@ public class Game {
                     bank+=player_bet/2;
                     //verification de la deusiemme carte du croupier (si c'est un figure, c'est un blackjack)
                     if (dealer.get_player_deck().is_blackjack()) {
+                        System.out.println("Le croupier a eu un blackjack, vous avez donc perdu votre assurance");
                         player1.add_money(player_bet);
                         bank-=player_bet/2;
                     }
