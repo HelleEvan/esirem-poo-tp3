@@ -5,27 +5,49 @@ public class Game {
     private Player dealer;
     private int bank;
 
-    public Game(Player _player1, Player _player2) {
+    public Game(Player _player1, Player _dealer) {
         player1 = _player1;
-        dealer = _player2;
+        dealer = _dealer;
+
         bank = 0;
     }
 
-
+    public int main_menu(){
+        System.out.println("Bienvenue chez Black-Jack BABA!\nQue voulez-vous faire?");
+        System.out.println("Jouer au jeu (1)\nQuitter le jeu (2)");
+        Scanner user_input = new Scanner(System.in);
+        String user_choice = user_input.nextLine();
+        if(user_choice.equals("1")){
+            start_game();
+        } else if (user_choice.equals("2")) {
+            System.out.println(" Au revoir, Revenez vite!");
+            return 0;
+        }
+        return 0;
+    }
 
     public void start_game() {
+        int player1_bank = player1.get_money();
+        int user_bet=0;
         Scanner player_input = new Scanner(System.in);
         Scanner player_bet = new Scanner(System.in);
 
-        System.out.println("Miser 10?(y/n): ");
-        int user_bet = player_bet.nextInt();
+        System.out.println("Il vous reste,"+player1_bank+" coins, Voulez vous en miser (y/n): ");
         String user_response = player_input.nextLine();
-        if (user_response == "y") {
+        if (user_response.equals("y")) {
+            do {
+                System.out.println("Combien voulez vous miser?\nVous pouvez misez à hauteur de: "+player1_bank+" coins");
+                user_bet = player_input.nextInt();
+            } while(user_bet>player1_bank);
+
             player1.bet(user_bet);
-            bank+=10;
+            player1_bank -= user_bet;
+            bank+=user_bet;
+            System.out.println("Il vous reste désormais "+player1_bank+" coins");
+
             continue_game();
 
-        } else if (user_response == "n") {
+        } else if (user_response.equals("n")) {
             end_game_draw();
         }
 
