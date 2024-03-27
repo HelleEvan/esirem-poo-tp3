@@ -1,11 +1,11 @@
 public class Main {
     public static void main (String[] args){
-        Deck deck1 = new Deck();
-        deck1.game_deck();
-        //deck1.shuffle();
-        deck1.draw_card();
-        deck1.display_deck();
-
+        Deck deck_player1 = new Deck();
+        Deck deck_dealer= new Deck();
+        Player joueur1 = new Player("Joueur1",deck_player1 , false,100);
+        Player dealer = new Player("croupier",deck_dealer , true,100);
+        Game jeu = new Game(joueur1,dealer);
+        jeu.start_game();
     }
 
 }
