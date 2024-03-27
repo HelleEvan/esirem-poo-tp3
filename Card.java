@@ -66,4 +66,20 @@ public class Card {
     public void set_value(int _value) {
         this.value = _value;
     }
+
+    public void as_value(Player player){
+        int sum = 0;
+        int size = player.get_player_deck().get_deck().size();
+        //on recupere la valeur de la main du joueur
+        for (int i=0;i<size;i++){
+            sum+=player.get_player_deck().get_deck().get(i).value_card();
+        }
+        if (sum <=10){
+            value = 11;
+        }
+        else {
+            value = 1;
+        }
+        // cette methode necessitera de regarder si la carte pioché est un 1 ou non à chaque fois
+    }
 }
