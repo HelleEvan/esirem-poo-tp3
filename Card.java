@@ -98,6 +98,20 @@ public class Card {
         }
         return number;
     }
+    public int conv_head(int _value){
+        switch (_value){
+            case 11:
+                value = 10;
+                break;
+            case 12:
+                value = 10;
+                break;
+            case 13:
+                value = 10;
+                break;
+        }
+        return value;
+    }
 
     public String get_color() {
         return color;
