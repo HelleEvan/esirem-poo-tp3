@@ -11,7 +11,19 @@ public class Game {
         bank = 0;
     }
 
-
+    public int main_menu(){
+        System.out.println("Bienvenue chez Black-Jack BABA!\nQue voulez-vous faire?");
+        System.out.println("Jouer au jeu (1)\nQuitter le jeu (2)");
+        Scanner user_input = new Scanner(System.in);
+        String user_choice = user_input.nextLine();
+        if(user_choice.equals("1")){
+            start_game();
+        } else if (user_choice.equals("2")) {
+            System.out.println(" Au revoir, Revenez vite!");
+            return 0;
+        }
+        return 0;
+    }
 
     public void start_game() {
         int player1_bank = player1.get_money();

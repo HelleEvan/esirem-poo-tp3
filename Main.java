@@ -5,7 +5,7 @@ public class Main {
         Player joueur1 = new Player("Joueur1",deck_player1 , false,100);
         Player dealer = new Player("croupier",deck_dealer , true,100);
         Game jeu = new Game(joueur1,dealer);
-        jeu.start_game();
+        jeu.main_menu();
     }
 
 }
