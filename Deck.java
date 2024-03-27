@@ -29,7 +29,9 @@ public class Deck extends Card{
     }
     public void display_deck(){
         for(int i = 0; i< tab_card.size(); i++){
-            System.out.println(tab_card.get(i).get_value()+tab_card.get(i).get_color());
+             int value = tab_card.get(i).get_value();
+             String card_number = number_association(value);
+            System.out.println( card_number+tab_card.get(i).get_color());
         }
     }
     public void shuffle(){
