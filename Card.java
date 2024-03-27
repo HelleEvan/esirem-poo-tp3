@@ -7,7 +7,7 @@ public class Card {
     public Card(){
         color = "";
         value = 0;
-        number ="0";
+        number ="";
     }
     public Card(int _value,String _color, String _number){
         this.color = _color;
@@ -99,6 +99,14 @@ public class Card {
         return number;
     }
 
+    public int conv_head(){
+        //convertir les tetes pour que leur valeur soit à 10
+        if(value==11 || value==12 || value==13){
+            value=10;
+        }
+        return value;
+    }
+
     public String get_color() {
         return color;
     }
@@ -117,7 +125,7 @@ public class Card {
         this.value = _value;
     }
 
-    public void as_value(Player player){
+    public int as_value(Player player){
         int sum = 0;
         int size = player.get_player_deck().get_deck().size();
         //on recupere la valeur de la main du joueur
@@ -130,6 +138,7 @@ public class Card {
         else {
             value = 1;
         }
+        return value;
         // cette methode necessitera de regarder si la carte pioché est un 1 ou non à chaque fois
     }
 }
