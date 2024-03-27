@@ -42,6 +42,7 @@ public class Deck extends Card{
             Card tmp =new Card();
             Card tmp1 =new Card();
 
+            //on echange la i eme carte et celle d'une position random
             tmp= tab_card.get(i);
             tmp1 = tab_card.get(n);
             tab_card.set(n,tmp);
@@ -53,6 +54,7 @@ public class Deck extends Card{
         tab_card.add(carte);
     }
     public Card draw_card(){
+        // methode pour piocher une carte et la retirer de la pile
         Card carte_withdrew =new Card();
         int size = tab_card.size();
         carte_withdrew = tab_card.get(size-1);
