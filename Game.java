@@ -8,6 +8,7 @@ public class Game {
     public Game(Player _player1, Player _dealer) {
         player1 = _player1;
         dealer = _dealer;
+
         bank = 0;
     }
 
@@ -29,6 +30,7 @@ public class Game {
         int player1_bank = player1.get_money();
         int user_bet=0;
         Scanner player_input = new Scanner(System.in);
+        Scanner player_bet = new Scanner(System.in);
 
         System.out.println("Il vous reste,"+player1_bank+" coins, Voulez vous en miser (y/n): ");
         String user_response = player_input.nextLine();
@@ -42,6 +44,7 @@ public class Game {
             player1_bank -= user_bet;
             bank+=user_bet;
             System.out.println("Il vous reste désormais "+player1_bank+" coins");
+
             continue_game();
 
         } else if (user_response.equals("n")) {
@@ -99,5 +102,30 @@ public class Game {
     }
     public void loser(Player _loser){
         System.out.println("Vous avez perdu!");
+    }
+
+    public void assurance(int player_bet){
+        //condition sur la premiere carte du croupier
+                Scanner player_response = new Scanner(System.in);
+                System.out.println("Est-ce que voulez-vous assurer? (cela vous permet de vous proteger d'un eventuel blackjack du croupier) (y/n)");
+                String user_response = player_response.nextLine();
+                if(user_response.equals("y")) {
+                    player1.bet(player_bet / 2);
+                    bank+=player_bet/2;
+                    //verification de la deusiemme carte du croupier (si c'est un figure, c'est un blackjack)
+                    if (dealer.get_player_deck().is_blackjack()) {
+                        player1.add_money(player_bet);
+                        bank-=player_bet/2;
+                    }
+                    else {
+                        System.out.println("Le croupier n'a pas eu de blackjack, vous avez donc perdu votre assurance");
+                        if(player1.get_player_deck().is_blackjack()){
+                            player1.add_money(player_bet);
+                            bank-=player_bet;
+                        }
+                    }
+                }
+
+
     }
 }
