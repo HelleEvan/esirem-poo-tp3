@@ -98,14 +98,21 @@ public class Card {
         }
         return number;
     }
-    public int conv_head(int _value){
+    public int conv_value(int _value){
         switch (_value){
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+            case 10:
+                value = _value;
             case 11:
-                value = 10;
-                break;
             case 12:
-                value = 10;
-                break;
             case 13:
                 value = 10;
                 break;
