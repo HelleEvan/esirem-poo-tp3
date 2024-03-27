@@ -36,7 +36,7 @@ public class Deck extends Card{
         for(int i = 0; i< tab_card.size(); i++){
              int value = tab_card.get(i).get_value();
              String card_number = number_association(value);
-            System.out.print( card_number+tab_card.get(i).get_color());
+            System.out.print( card_number+tab_card.get(i).get_color()+" ");
             if(i== tab_card.size()-1){
                 System.out.println("\n");
             }
