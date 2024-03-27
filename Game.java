@@ -38,6 +38,10 @@ public class Game {
             do {
                 System.out.println("Combien voulez vous miser?\nVous pouvez misez à hauteur de: "+player1_bank+" coins");
                 user_bet = player_input.nextInt();
+
+                if(user_bet>player1_bank){
+                    System.out.println("Erreur, vous avez trop miser!!!");
+                }
             } while(user_bet>player1_bank);
 
             player1.bet(user_bet);
