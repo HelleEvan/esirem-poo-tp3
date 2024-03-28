@@ -81,11 +81,11 @@ public class Game {
             player1.draw_card(game_deck);
             dealer.draw_card(game_deck);
             //gestion de la valeur de l'as
-            if(player1.get_player_deck().get_deck().get(i).get_value()==1){
+            if(player1.get_player_deck().get_deck().get(i).get_number().equals("1")){
                 int value_card_player= carte.as_value(player1);
                 player1.get_player_deck().get_deck().get(i).set_value(value_card_player);
             }
-            if(dealer.get_player_deck().get_deck().get(i).get_value()==1){
+            if(dealer.get_player_deck().get_deck().get(i).get_number().equals("1")){
                 int value_card_player= carte.as_value(dealer);
                 player1.get_player_deck().get_deck().get(i).set_value(value_card_player);
             }
@@ -147,7 +147,7 @@ public class Game {
                             player1.draw_card(game_deck);
                             player_draw = true;
                             //gestion de la valeur de l'as
-                            if(player1.get_player_deck().get_deck().getLast().get_value()==1){
+                            if(player1.get_player_deck().get_deck().getLast().get_number().equals("1")){
                                 value_card_player= carte.as_value(player1);
                                 player1.get_player_deck().get_deck().getLast().set_value(value_card_player);
                             }
@@ -164,7 +164,7 @@ public class Game {
                         dealer.draw_card(game_deck);
                         dealer_draw = true;
                         //gestion de la valeur de l'as
-                        if(dealer.get_player_deck().get_deck().getLast().get_value()==1){
+                        if(dealer.get_player_deck().get_deck().getLast().get_number().equals("1")){
                             value_card_player= carte.as_value(dealer);
                             dealer.get_player_deck().get_deck().getLast().set_value(value_card_player);
                         }
