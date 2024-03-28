@@ -104,7 +104,7 @@ public class Game {
             sum_deck_player1 += carte.conv_value(value_card_player);
         }
 
-        //Partie coupier
+        //Partie croupier
         //affichage de la premiere carte du croupier
         int value_first_card_dealer = dealer.get_player_deck().get_deck().getFirst().get_value();
         String number_first_card_dealer = carte.number_association(value_first_card_dealer);
@@ -171,51 +171,52 @@ public class Game {
                         dealer.get_player_deck().get_deck().getLast().set_value(value_card_player);
                     }
                 }
-            }
-            //si les deux joueur arrete de piocher, fin de partie
-            if (!player_wants_to_draw && sum_deck_player2 > 17) {
-                end_game(sum_deck_player1, sum_deck_player2, _player_bet);
-            }
-            if (sum_deck_player2 <= 17) {
-                dealer.draw_card(game_deck);
-                dealer_draw = true;
-            }
 
-            //recuperation de la taille actuelle du deck des joueurs
-            int size_deck_player = player1.get_player_deck().get_deck().size();
-            int size_deck_dealer = dealer.get_player_deck().get_deck().size();
+                //si les deux joueur arrete de piocher, fin de partie
+                if (!player_wants_to_draw && sum_deck_player2 > 17) {
+                    end_game(sum_deck_player1, sum_deck_player2, _player_bet);
+                }
+                if (sum_deck_player2 <= 17) {
+                    dealer.draw_card(game_deck);
+                    dealer_draw = true;
+                }
 
-            int value1 = player1.get_player_deck().get_deck().get(size_deck_player - 1).get_value();
-            int value2 = dealer.get_player_deck().get_deck().get(size_deck_dealer - 1).get_value();
-            String number1 = carte.number_association(value1);
-            String number2 = carte.number_association(value2);
+                //recuperation de la taille actuelle du deck des joueurs
+                int size_deck_player = player1.get_player_deck().get_deck().size();
+                int size_deck_dealer = dealer.get_player_deck().get_deck().size();
 
-            if (player_draw) {
-                System.out.println("Carte pioché: " + number1 + player1.get_player_deck().get_deck().get(size_deck_player - 1).get_color());
+                int value1 = player1.get_player_deck().get_deck().get(size_deck_player - 1).get_value();
+                int value2 = dealer.get_player_deck().get_deck().get(size_deck_dealer - 1).get_value();
+                String number1 = carte.number_association(value1);
+                String number2 = carte.number_association(value2);
+
+                if (player_draw) {
+                    System.out.println("Carte pioché: " + number1 + player1.get_player_deck().get_deck().get(size_deck_player - 1).get_color());
+                }
+                if (dealer_draw) {
+                    System.out.println("Carte pioché par le croupier: " + number2 + dealer.get_player_deck().get_deck().get(size_deck_dealer - 1).get_color());
+                }
+
+                System.out.println("Votre main:");
+                player1.get_player_deck().display_deck();
+
+                System.out.println("Main du croupier:");
+                dealer.get_player_deck().display_deck();
+
+                //recuperation de la valeur du deck de chaque joueur
+                sum_deck_player1 = 0;
+                sum_deck_player2 = 0;
+                for (int i = 0; i < size_deck_player; i++) {
+                    value_card_player = player1.get_player_deck().get_deck().get(i).get_value();
+                    sum_deck_player1 += carte.conv_value(value_card_player);
+                }
+                for (int i = 0; i < size_deck_dealer; i++) {
+                    value_card_dealer = dealer.get_player_deck().get_deck().get(i).get_value();
+                    sum_deck_player2 += carte.conv_value(value_card_dealer);
+                }
+                System.out.println("La somme de votre main est: " + sum_deck_player1);
+                System.out.println("La somme de la main du croupier: " + sum_deck_player2);
             }
-            if (dealer_draw) {
-                System.out.println("Carte pioché par le croupier: " + number2 + dealer.get_player_deck().get_deck().get(size_deck_dealer - 1).get_color());
-            }
-
-            System.out.println("Votre main:");
-            player1.get_player_deck().display_deck();
-
-            System.out.println("Main du croupier:");
-            dealer.get_player_deck().display_deck();
-
-            //recuperation de la valeur du deck de chaque joueur
-            sum_deck_player1 = 0;
-            sum_deck_player2 = 0;
-            for (int i = 0; i < size_deck_player; i++) {
-                value_card_player = player1.get_player_deck().get_deck().get(i).get_value();
-                sum_deck_player1 += carte.conv_value(value_card_player);
-            }
-            for (int i = 0; i < size_deck_dealer; i++) {
-                value_card_dealer = dealer.get_player_deck().get_deck().get(i).get_value();
-                sum_deck_player2 += carte.conv_value(value_card_dealer);
-            }
-            System.out.println("La somme de votre main est: " + sum_deck_player1);
-            System.out.println("La somme de la main du croupier: " + sum_deck_player2);
         }
         end_game(sum_deck_player1,sum_deck_player2, _player_bet);
     }
