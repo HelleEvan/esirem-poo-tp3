@@ -5,11 +5,14 @@ public class Game {
     private Player player1;
     private Player dealer;
     private int bank;
+    private int score_player1;
+    private int score_dealer;
 
     public Game(Player _player1, Player _dealer) {
         player1 = _player1;
         dealer = _dealer;
-
+        score_dealer=0;
+        score_player1=0;
         bank = 0;
     }
 
@@ -133,8 +136,9 @@ public class Game {
                 Scanner user_input = new Scanner(System.in);
                 continu = user_input.nextLine();
             }while (!Objects.equals(continu, "y"));
-                //condition pour que la partie continue
+            //condition pour que la partie continue
             boolean player_wants_to_draw = true;
+
                 while (sum_deck_player1 <= 21 && sum_deck_player2 <= 21) {
                     round += 1;
                     System.out.println("\nround n°" + round);
@@ -169,43 +173,52 @@ public class Game {
                             dealer.get_player_deck().get_deck().getLast().set_value(value_card_player);
                         }
                     }
-
-                    //recuperation de la taille actuelle du deck des joueurs
-                    int size_deck_player = player1.get_player_deck().get_deck().size();
-                    int size_deck_dealer = dealer.get_player_deck().get_deck().size();
-
-                    int value1 = player1.get_player_deck().get_deck().get(size_deck_player - 1).get_value();
-                    int value2 = dealer.get_player_deck().get_deck().get(size_deck_dealer - 1).get_value();
-                    String number1 = carte.number_association(value1);
-                    String number2 = carte.number_association(value2);
-
-                    if (player_draw) {
-                        System.out.println("Carte pioché: " + number1 + player1.get_player_deck().get_deck().get(size_deck_player - 1).get_color());
-                    }
-                    if (dealer_draw) {
-                        System.out.println("Carte pioché par le croupier: " + number2 + dealer.get_player_deck().get_deck().get(size_deck_dealer - 1).get_color());
-                    }
-
-                    System.out.println("Votre main:");
-                    player1.get_player_deck().display_deck();
-
-                    System.out.println("Main du croupier:");
-                    dealer.get_player_deck().display_deck();
-
-                    //recuperation de la valeur du deck de chaque joueur
-                    sum_deck_player1 = 0;
-                    sum_deck_player2 = 0;
-                    for (int i = 0; i < size_deck_player; i++) {
-                        value_card_player = player1.get_player_deck().get_deck().get(i).get_value();
-                        sum_deck_player1 += carte.conv_value(value_card_player);
-                    }
-                    for (int i = 0; i < size_deck_dealer; i++) {
-                        value_card_dealer = dealer.get_player_deck().get_deck().get(i).get_value();
-                        sum_deck_player2 += carte.conv_value(value_card_dealer);
-                    }
-                    System.out.println("La somme de votre main est: " + sum_deck_player1);
-                    System.out.println("La somme de la main du croupier: " + sum_deck_player2);
                 }
+                //si les deux joueur arrete de piocher, fin de partie
+                if (!player_wants_to_draw && sum_deck_player2 > 17) {
+                    end_game(sum_deck_player1, sum_deck_player2, _player_bet);
+                }
+                if (sum_deck_player2 <= 17) {
+                    dealer.draw_card(game_deck);
+                    dealer_draw = true;
+                }
+
+                //recuperation de la taille actuelle du deck des joueurs
+                int size_deck_player = player1.get_player_deck().get_deck().size();
+                int size_deck_dealer = dealer.get_player_deck().get_deck().size();
+
+                int value1 = player1.get_player_deck().get_deck().get(size_deck_player - 1).get_value();
+                int value2 = dealer.get_player_deck().get_deck().get(size_deck_dealer - 1).get_value();
+                String number1 = carte.number_association(value1);
+                String number2 = carte.number_association(value2);
+
+                if (player_draw) {
+                    System.out.println("Carte pioché: " + number1 + player1.get_player_deck().get_deck().get(size_deck_player - 1).get_color());
+                }
+                if (dealer_draw) {
+                    System.out.println("Carte pioché par le croupier: " + number2 + dealer.get_player_deck().get_deck().get(size_deck_dealer - 1).get_color());
+                }
+
+                System.out.println("Votre main:");
+                player1.get_player_deck().display_deck();
+
+                System.out.println("Main du croupier:");
+                dealer.get_player_deck().display_deck();
+
+                //recuperation de la valeur du deck de chaque joueur
+                sum_deck_player1 = 0;
+                sum_deck_player2 = 0;
+                for (int i = 0; i < size_deck_player; i++) {
+                    value_card_player = player1.get_player_deck().get_deck().get(i).get_value();
+                    sum_deck_player1 += carte.conv_value(value_card_player);
+                }
+                for (int i = 0; i < size_deck_dealer; i++) {
+                    value_card_dealer = dealer.get_player_deck().get_deck().get(i).get_value();
+                    sum_deck_player2 += carte.conv_value(value_card_dealer);
+                }
+                System.out.println("La somme de votre main est: " + sum_deck_player1);
+                System.out.println("La somme de la main du croupier: " + sum_deck_player2);
+            }
 
         }
         end_game(sum_deck_player1,sum_deck_player2, _player_bet);
@@ -217,6 +230,7 @@ public class Game {
             if (dealer.get_player_deck().is_blackjack()){
                 player1.add_money(_player_bet);
                 bank-=_player_bet;
+                System.out.println("Vous avez eu un blackjack. Le croupier aussi !!");
                 end_game_draw();
             }
             else {
@@ -230,27 +244,33 @@ public class Game {
             player1.add_money(bank);
             bank=0;
             System.out.println("Vous avez ganger, le croupier a depasser 21 points. Votre solde est: "+ player1.get_money());
+            score_player1+=1;
         }
         else if (_sum_deck_player1 >21){
             System.out.println("Vous avez plus que 21 points! Vous avez donc perdu votre mise de " +_player_bet+" !");
+            score_dealer+=1;
         }
 
         //les joueurs qui ont 21 points ou moins sans blackjack
         else if (!player1.get_player_deck().is_blackjack()){
 
-             if (_sum_deck_player2<21){
+            if (_sum_deck_player2<21){
                 if (_sum_deck_player1<_sum_deck_player2){
                     System.out.println("Vous avez moins de points que le croupier! Vous avez donc perdu votre mise de "+_player_bet+" !");
+                    score_dealer+=1;
                 }
                 else if (_sum_deck_player1 == _sum_deck_player2){
                     System.out.println("PUSH !! Vous avez autant de points que le croupier ! Vous recuperer donc votre mise de "+_player_bet+" !");
+
                     player1.add_money(_player_bet);
                     bank-=_player_bet;
+                    end_game_draw();
                 }
                 else if (_sum_deck_player1>_sum_deck_player2){
                     System.out.println("Vous avez plus de points que le croupier ! Vous recuperer donc votre mise de "+_player_bet+" !");
                     player1.add_money(_player_bet);
                     bank-=_player_bet;
+                    score_player1+=1;
                 }
             }
         }
@@ -277,6 +297,8 @@ public class Game {
                     end_menu();
                     break;
                 case "3":
+                    display_scores();
+                    end_menu();
                     break;
                 case "4":
                     break;
@@ -287,31 +309,34 @@ public class Game {
     }
     public void assurance(int player_bet){
         //condition sur la premiere carte du croupier
-                Card carte = new Card();
-                Scanner player_response = new Scanner(System.in);
-                System.out.println("Est-ce que voulez-vous assurer? (cela vous permet de vous proteger d'un eventuel blackjack du croupier) (y/n)");
-                String user_response = player_response.nextLine();
-                if(user_response.equals("y")) {
-                    player1.bet(player_bet / 2);
-                    bank+=player_bet/2;
-                    //verification de la deusiemme carte du croupier (si c'est un figure, c'est un blackjack)
-                    int value_second_card_dealer = dealer.get_player_deck().get_deck().get(1).get_value();
-                    String number_second_card_dealer = carte.number_association(value_second_card_dealer);
-                    System.out.println("Deuxième carte pioché par le croupier: "+ number_second_card_dealer+dealer.get_player_deck().get_deck().get(1).get_color());
-                    if (dealer.get_player_deck().is_blackjack()) {
-                        System.out.println("Le croupier a eu un blackjack, vous avez donc perdu votre assurance");
-                        player1.add_money(player_bet);
-                        bank-=player_bet/2;
-                    }
-                    else {
-                        System.out.println("Le croupier n'a pas eu de blackjack, vous avez donc perdu votre assurance");
-                        if(player1.get_player_deck().is_blackjack()){
-                            player1.add_money(player_bet);
-                            bank-=player_bet;
-                        }
-                    }
+        Card carte = new Card();
+        Scanner player_response = new Scanner(System.in);
+        System.out.println("Est-ce que voulez-vous assurer? (cela vous permet de vous proteger d'un eventuel blackjack du croupier) (y/n)");
+        String user_response = player_response.nextLine();
+        if(user_response.equals("y")) {
+            player1.bet(player_bet / 2);
+            bank+=player_bet/2;
+            //verification de la deusiemme carte du croupier (si c'est un figure, c'est un blackjack)
+            int value_second_card_dealer = dealer.get_player_deck().get_deck().get(1).get_value();
+            String number_second_card_dealer = carte.number_association(value_second_card_dealer);
+            System.out.println("Deuxième carte pioché par le croupier: "+ number_second_card_dealer+dealer.get_player_deck().get_deck().get(1).get_color());
+            if (dealer.get_player_deck().is_blackjack()) {
+                System.out.println("Le croupier a eu un blackjack, vous avez donc perdu votre assurance");
+                player1.add_money(player_bet);
+                bank-=player_bet/2;
+            }
+            else {
+                System.out.println("Le croupier n'a pas eu de blackjack, vous avez donc perdu votre assurance");
+                if(player1.get_player_deck().is_blackjack()){
+                    player1.add_money(player_bet);
+                    bank-=player_bet;
                 }
+            }
+        }
 
-
+    }
+    public void display_scores(){
+        System.out.println("Score player 1: "+score_player1);
+        System.out.println("Score du croupier: "+score_dealer);
     }
 }
