@@ -80,6 +80,15 @@ public class Game {
         for(int i =0;i<start_card;i++) {
             player1.draw_card(game_deck);
             dealer.draw_card(game_deck);
+            //gestion de la valeur de l'as
+            if(player1.get_player_deck().get_deck().get(i).get_value()==1){
+                int value_card_player= carte.as_value(player1);
+                player1.get_player_deck().get_deck().get(i).set_value(value_card_player);
+            }
+            if(dealer.get_player_deck().get_deck().get(i).get_value()==1){
+                int value_card_player= carte.as_value(dealer);
+                player1.get_player_deck().get_deck().get(i).set_value(value_card_player);
+            }
         }
         //afficher la main de base du joueur
         System.out.println("Voici votre main de départ: ");
@@ -137,6 +146,12 @@ public class Game {
                         if (player_decision.equals("y")) {
                             player1.draw_card(game_deck);
                             player_draw = true;
+                            //gestion de la valeur de l'as
+                            if(player1.get_player_deck().get_deck().getLast().get_value()==1){
+                                value_card_player= carte.as_value(player1);
+                                player1.get_player_deck().get_deck().getLast().set_value(value_card_player);
+                            }
+
                         }else if (player_decision.equals("n")) {
                             player_wants_to_draw=false;
                         }
@@ -148,6 +163,11 @@ public class Game {
                     if (sum_deck_player2 <= 17) {
                         dealer.draw_card(game_deck);
                         dealer_draw = true;
+                        //gestion de la valeur de l'as
+                        if(dealer.get_player_deck().get_deck().getLast().get_value()==1){
+                            value_card_player= carte.as_value(dealer);
+                            dealer.get_player_deck().get_deck().getLast().set_value(value_card_player);
+                        }
                     }
 
                     //recuperation de la taille actuelle du deck des joueurs
