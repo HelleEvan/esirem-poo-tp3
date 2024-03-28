@@ -241,26 +241,29 @@ public class Game {
         System.out.println("Match nul");
     }
     public void end_menu(){
-        System.out.println("Rejouer (1)");
-        System.out.println("Acceder a votre solde (2)");
-        System.out.println("Acceder au socre (3)");
-        System.out.println("Quitter (4)");
-        Scanner user_input = new Scanner(System.in);
-        String user_choice = user_input.nextLine();
-        switch (user_choice){
-            case "1":
-                start_game();
-                break;
-            case "2":
-                System.out.println("Voici votre solde : "+player1.get_money());
-                end_menu();
-                break;
-            case "3":
-                break;
-            case "4":
-                break;
+        String user_choice;
+        do {
+            System.out.println("Rejouer (1)");
+            System.out.println("Acceder a votre solde (2)");
+            System.out.println("Acceder au socre (3)");
+            System.out.println("Quitter (4)");
+            Scanner user_input = new Scanner(System.in);
+            user_choice = user_input.nextLine();
+            switch (user_choice) {
+                case "1":
+                    start_game();
+                    break;
+                case "2":
+                    System.out.println("Voici votre solde : " + player1.get_money());
+                    end_menu();
+                    break;
+                case "3":
+                    break;
+                case "4":
+                    break;
 
-        }
+            }
+        }while (!Objects.equals(user_choice, "1")&&!Objects.equals(user_choice, "2")&&!Objects.equals(user_choice, "3")&&!Objects.equals(user_choice, "4"));
 
     }
     public void assurance(int player_bet){
