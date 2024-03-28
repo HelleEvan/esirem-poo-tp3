@@ -124,17 +124,25 @@ public class Game {
                 continu = user_input.nextLine();
             }while (!Objects.equals(continu, "y"));
                 //condition pour que la partie continue
+            boolean player_wants_to_draw = true;
                 while (sum_deck_player1 <= 21 && sum_deck_player2 <= 21) {
-
                     round += 1;
                     System.out.println("\nround n°" + round);
-
-                    System.out.println("Voulez vous piocher une carte? (y/n)");
-                    Scanner user_input = new Scanner(System.in);
-                    String player_decision = user_input.nextLine();
-                    if (player_decision.equals("y")) {
-                        player1.draw_card(game_deck);
-                        player_draw = true;
+                    //si le joueur ne pioche pas une fois, il ne poichera plus jamais de la partie
+                    if(player_wants_to_draw) {
+                        System.out.println("Voulez vous piocher une carte? (y/n)");
+                        Scanner user_input = new Scanner(System.in);
+                        String player_decision = user_input.nextLine();
+                        if (player_decision.equals("y")) {
+                            player1.draw_card(game_deck);
+                            player_draw = true;
+                        }else if (player_decision.equals("n")) {
+                            player_wants_to_draw=false;
+                        }
+                    }
+                    //si les deux joueur arrete de piocher, fin de partie
+                    if (!player_wants_to_draw && sum_deck_player2 > 17) {
+                        end_game(sum_deck_player1, sum_deck_player2, _player_bet);
                     }
                     if (sum_deck_player2 <= 17) {
                         dealer.draw_card(game_deck);
