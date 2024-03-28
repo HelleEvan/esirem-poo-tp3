@@ -36,11 +36,11 @@ public class Game {
         String user_response = player_input.nextLine();
         if (user_response.equals("y")) {
             do {
-                System.out.println("Combien voulez vous miser?\nVous pouvez misez à hauteur de: "+player1_bank+" coins");
+                System.out.println("Combien voulez vous miser?\nVous pouvez miser à hauteur de: "+player1_bank+" coins");
                 user_bet = player_input.nextInt();
 
                 if(user_bet>player1_bank){
-                    System.out.println("Erreur, vous avez trop miser!!!");
+                    System.out.println("Erreur, vous avez trop misé!!!");
                 }
             } while(user_bet>player1_bank);
 
