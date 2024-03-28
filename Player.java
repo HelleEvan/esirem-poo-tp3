@@ -49,5 +49,8 @@ public class Player {
         this.money +=_money_to_add;
     }
 
+    public void remove_money(int _money_to_remove){
+        this.money -=_money_to_remove;
+    }
 
 }
