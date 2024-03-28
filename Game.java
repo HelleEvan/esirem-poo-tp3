@@ -91,7 +91,6 @@ public class Game {
             value_card_player= player1.get_player_deck().get_deck().get(i).get_value();
             sum_deck_player1+= carte.conv_value(value_card_player);
         }
-        System.out.println("La somme de votre main est: "+sum_deck_player1);
 
         //Partie coupier
         //affichage de la premiere carte du croupier
@@ -112,6 +111,8 @@ public class Game {
             value_card_dealer= dealer.get_player_deck().get_deck().get(i).get_value();
             sum_deck_player2+= carte.conv_value(value_card_dealer);
         }
+        System.out.println("La somme de votre main est: "+sum_deck_player1);
+        System.out.println("La somme de la main du croupier est: "+sum_deck_player2);
         //fin de partie pour un blackJack naturel
         if(sum_deck_player1==21||sum_deck_player2==21){
             end_game(sum_deck_player1,sum_deck_player2,_player_bet);
@@ -210,25 +211,23 @@ public class Game {
             bank=0;
             System.out.println("Vous avez ganger, le croupier a depasser 21 points. Votre solde est: "+ player1.get_money());
         }
-        if (_sum_deck_player1 >21){
+        else if (_sum_deck_player1 >21){
             System.out.println("Vous avez plus que 21 points! Vous avez donc perdu votre mise de " +_player_bet+" !");
         }
 
         //les joueurs qui ont 21 points ou moins sans blackjack
-        if (_sum_deck_player1<=21 && !player1.get_player_deck().is_blackjack()){
-            if (_sum_deck_player2>21){
-                player1.add_money(_player_bet);
-            }
-            if (_sum_deck_player2<21){
+        else if (!player1.get_player_deck().is_blackjack()){
+
+             if (_sum_deck_player2<21){
                 if (_sum_deck_player1<_sum_deck_player2){
                     System.out.println("Vous avez moins de points que le croupier! Vous avez donc perdu votre mise de "+_player_bet+" !");
                 }
-                if (_sum_deck_player1 == _sum_deck_player2){
+                else if (_sum_deck_player1 == _sum_deck_player2){
                     System.out.println("PUSH !! Vous avez autant de points que le croupier ! Vous recuperer donc votre mise de "+_player_bet+" !");
                     player1.add_money(_player_bet);
                     bank-=_player_bet;
                 }
-                if (_sum_deck_player1>_sum_deck_player2){
+                else if (_sum_deck_player1>_sum_deck_player2){
                     System.out.println("Vous avez plus de points que le croupier ! Vous recuperer donc votre mise de "+_player_bet+" !");
                     player1.add_money(_player_bet);
                     bank-=_player_bet;
