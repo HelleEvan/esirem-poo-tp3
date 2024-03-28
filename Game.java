@@ -83,8 +83,13 @@ public class Game {
         for(int i =0;i<start_card;i++) {
             player1.draw_card(game_deck);
             dealer.draw_card(game_deck);
-            if(player1.get_player_deck().get_deck().get(i).get_value()==1){
+            //gestion de la valeur de l'as
+            if(player1.get_player_deck().get_deck().get(i).get_number().equals("1")){
                 int value_card_player= carte.as_value(player1);
+                player1.get_player_deck().get_deck().get(i).set_value(value_card_player);
+            }
+            if(dealer.get_player_deck().get_deck().get(i).get_number().equals("1")){
+                int value_card_player= carte.as_value(dealer);
                 player1.get_player_deck().get_deck().get(i).set_value(value_card_player);
             }
         }
@@ -133,20 +138,40 @@ public class Game {
             }while (!Objects.equals(continu, "y"));
             //condition pour que la partie continue
             boolean player_wants_to_draw = true;
-            while (sum_deck_player1 <= 21 && sum_deck_player2 <= 21) {
-                round += 1;
-                System.out.println("\nround n°" + round);
-                //si le joueur ne pioche pas une fois, il ne poichera plus jamais de la partie
-                if(player_wants_to_draw) {
-                    System.out.println("Voulez vous piocher une carte? (y/n)");
-                    Scanner user_input = new Scanner(System.in);
-                    String player_decision = user_input.nextLine();
-                    if (player_decision.equals("y")) {
-                        player1.draw_card(game_deck);
-                        player_draw = true;
 
-                    }else if (player_decision.equals("n")) {
-                        player_wants_to_draw=false;
+                while (sum_deck_player1 <= 21 && sum_deck_player2 <= 21) {
+                    round += 1;
+                    System.out.println("\nround n°" + round);
+                    //si le joueur ne pioche pas une fois, il ne poichera plus jamais de la partie
+                    if(player_wants_to_draw) {
+                        System.out.println("Voulez vous piocher une carte? (y/n)");
+                        Scanner user_input = new Scanner(System.in);
+                        String player_decision = user_input.nextLine();
+                        if (player_decision.equals("y")) {
+                            player1.draw_card(game_deck);
+                            player_draw = true;
+                            //gestion de la valeur de l'as
+                            if(player1.get_player_deck().get_deck().getLast().get_number().equals("1")){
+                                value_card_player= carte.as_value(player1);
+                                player1.get_player_deck().get_deck().getLast().set_value(value_card_player);
+                            }
+
+                        }else if (player_decision.equals("n")) {
+                            player_wants_to_draw=false;
+                        }
+                    }
+                    //si les deux joueur arrete de piocher, fin de partie
+                    if (!player_wants_to_draw && sum_deck_player2 > 17) {
+                        end_game(sum_deck_player1, sum_deck_player2, _player_bet);
+                    }
+                    if (sum_deck_player2 <= 17) {
+                        dealer.draw_card(game_deck);
+                        dealer_draw = true;
+                        //gestion de la valeur de l'as
+                        if(dealer.get_player_deck().get_deck().getLast().get_number().equals("1")){
+                            value_card_player= carte.as_value(dealer);
+                            dealer.get_player_deck().get_deck().getLast().set_value(value_card_player);
+                        }
                     }
                 }
                 //si les deux joueur arrete de piocher, fin de partie
