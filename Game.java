@@ -82,7 +82,7 @@ public class Game {
             dealer.draw_card(game_deck);
         }
         //afficher la main de base du joueur
-        System.out.println("Voici votre mais de départ: ");
+        System.out.println("Voici votre main de départ: ");
         player1.get_player_deck().display_deck();
 
         //afficher la somme de la main de départ du joueur
@@ -119,10 +119,10 @@ public class Game {
         else {
             String continu;
             do {
-                System.out.println("pour continuer, appuyez sur 'o'");
+                System.out.println("pour continuer, appuyez sur (y)");
                 Scanner user_input = new Scanner(System.in);
                 continu = user_input.nextLine();
-            }while (!Objects.equals(continu, "o"));
+            }while (!Objects.equals(continu, "y"));
                 //condition pour que la partie continue
                 while (sum_deck_player1 <= 21 && sum_deck_player2 <= 21) {
 
