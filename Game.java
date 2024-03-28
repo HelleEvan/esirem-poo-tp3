@@ -43,7 +43,7 @@ public class Game {
                     System.out.println("Erreur, vous avez trop miser!!!");
                 }
             } while(user_bet>player1_bank);
-
+            System.out.println("Vous avez  miser " +user_bet+", le croupier a miser la meme valeur que vous soit, " +user_response+".");
             player1.bet(user_bet);
             player1_bank -= user_bet;
             bank+=user_bet;
