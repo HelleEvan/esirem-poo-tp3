@@ -68,6 +68,9 @@ public class Deck extends Card{
 
     }
 
+    public void delete_deck(){
+        tab_card.clear();
+    }
     public boolean is_blackjack(){
         if ((tab_card.get(0).get_number().equals("1") && tab_card.get(1).get_number().equals("J")) || (tab_card.get(0).get_number().equals("1") && tab_card.get(1).get_number().equals("Q"))  || (tab_card.get(0).get_number().equals("1") && tab_card.get(1).get_number().equals("K"))){
             return true;
