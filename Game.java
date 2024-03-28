@@ -5,11 +5,14 @@ public class Game {
     private Player player1;
     private Player dealer;
     private int bank;
+    private int score_player1;
+    private int score_dealer;
 
     public Game(Player _player1, Player _dealer) {
         player1 = _player1;
         dealer = _dealer;
-
+        score_dealer=0;
+        score_player1=0;
         bank = 0;
     }
 
@@ -202,6 +205,7 @@ public class Game {
             if (dealer.get_player_deck().is_blackjack()){
                 player1.add_money(_player_bet);
                 bank-=_player_bet;
+                System.out.println("Vous avez eu un blackjack. Le croupier aussi !!");
                 end_game_draw();
             }
             else {
@@ -215,9 +219,11 @@ public class Game {
             player1.add_money(bank);
             bank=0;
             System.out.println("Vous avez ganger, le croupier a depasser 21 points. Votre solde est: "+ player1.get_money());
+            score_player1+=1;
         }
         else if (_sum_deck_player1 >21){
             System.out.println("Vous avez plus que 21 points! Vous avez donc perdu votre mise de " +_player_bet+" !");
+            score_dealer+=1;
         }
 
         //les joueurs qui ont 21 points ou moins sans blackjack
@@ -226,16 +232,20 @@ public class Game {
             if (_sum_deck_player2<21){
                 if (_sum_deck_player1<_sum_deck_player2){
                     System.out.println("Vous avez moins de points que le croupier! Vous avez donc perdu votre mise de "+_player_bet+" !");
+                    score_dealer+=1;
                 }
                 else if (_sum_deck_player1 == _sum_deck_player2){
                     System.out.println("PUSH !! Vous avez autant de points que le croupier ! Vous recuperer donc votre mise de "+_player_bet+" !");
+
                     player1.add_money(_player_bet);
                     bank-=_player_bet;
+                    end_game_draw();
                 }
                 else if (_sum_deck_player1>_sum_deck_player2){
                     System.out.println("Vous avez plus de points que le croupier ! Vous recuperer donc votre mise de "+_player_bet+" !");
                     player1.add_money(_player_bet);
                     bank-=_player_bet;
+                    score_player1+=1;
                 }
             }
         }
@@ -262,6 +272,8 @@ public class Game {
                     end_menu();
                     break;
                 case "3":
+                    display_scores();
+                    end_menu();
                     break;
                 case "4":
                     break;
@@ -297,6 +309,9 @@ public class Game {
             }
         }
 
-
+    }
+    public void display_scores(){
+        System.out.println("Score player 1: "+score_player1);
+        System.out.println("Score du croupier: "+score_dealer);
     }
 }
