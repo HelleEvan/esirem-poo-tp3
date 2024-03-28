@@ -94,7 +94,6 @@ public class Game {
             value_card_player= player1.get_player_deck().get_deck().get(i).get_value();
             sum_deck_player1+= carte.conv_value(value_card_player);
         }
-        System.out.println("La somme de votre main est: "+sum_deck_player1);
 
         //Partie coupier
         //affichage de la premiere carte du croupier
@@ -115,6 +114,8 @@ public class Game {
             value_card_dealer= dealer.get_player_deck().get_deck().get(i).get_value();
             sum_deck_player2+= carte.conv_value(value_card_dealer);
         }
+        System.out.println("La somme de votre main est: "+sum_deck_player1);
+        System.out.println("La somme de la main du croupier est: "+sum_deck_player2);
         //fin de partie pour un blackJack naturel
         if(sum_deck_player1==21||sum_deck_player2==21){
             end_game(sum_deck_player1,sum_deck_player2,_player_bet);
@@ -127,17 +128,25 @@ public class Game {
                 continu = user_input.nextLine();
             }while (!Objects.equals(continu, "y"));
                 //condition pour que la partie continue
+            boolean player_wants_to_draw = true;
                 while (sum_deck_player1 <= 21 && sum_deck_player2 <= 21) {
-
                     round += 1;
                     System.out.println("\nround n°" + round);
-
-                    System.out.println("Voulez vous piocher une carte? (y/n)");
-                    Scanner user_input = new Scanner(System.in);
-                    String player_decision = user_input.nextLine();
-                    if (player_decision.equals("y")) {
-                        player1.draw_card(game_deck);
-                        player_draw = true;
+                    //si le joueur ne pioche pas une fois, il ne poichera plus jamais de la partie
+                    if(player_wants_to_draw) {
+                        System.out.println("Voulez vous piocher une carte? (y/n)");
+                        Scanner user_input = new Scanner(System.in);
+                        String player_decision = user_input.nextLine();
+                        if (player_decision.equals("y")) {
+                            player1.draw_card(game_deck);
+                            player_draw = true;
+                        }else if (player_decision.equals("n")) {
+                            player_wants_to_draw=false;
+                        }
+                    }
+                    //si les deux joueur arrete de piocher, fin de partie
+                    if (!player_wants_to_draw && sum_deck_player2 > 17) {
+                        end_game(sum_deck_player1, sum_deck_player2, _player_bet);
                     }
                     if (sum_deck_player2 <= 17) {
                         dealer.draw_card(game_deck);
@@ -207,28 +216,26 @@ public class Game {
             System.out.println("Vous avez ganger, le croupier a depasser 21 points. Votre solde est: "+ player1.get_money());
             score_player1+=1;
         }
-        if (_sum_deck_player1 >21){
+        else if (_sum_deck_player1 >21){
             System.out.println("Vous avez plus que 21 points! Vous avez donc perdu votre mise de " +_player_bet+" !");
             score_dealer+=1;
         }
 
         //les joueurs qui ont 21 points ou moins sans blackjack
-        if (_sum_deck_player1<=21 && !player1.get_player_deck().is_blackjack()){
-            if (_sum_deck_player2>21){
-                player1.add_money(_player_bet);
-            }
-            if (_sum_deck_player2<21){
+        else if (!player1.get_player_deck().is_blackjack()){
+
+             if (_sum_deck_player2<21){
                 if (_sum_deck_player1<_sum_deck_player2){
                     System.out.println("Vous avez moins de points que le croupier! Vous avez donc perdu votre mise de "+_player_bet+" !");
                     score_dealer+=1;
                 }
-                if (_sum_deck_player1 == _sum_deck_player2){
+                else if (_sum_deck_player1 == _sum_deck_player2){
                     System.out.println("PUSH !! Vous avez autant de points que le croupier ! Vous recuperer donc votre mise de "+_player_bet+" !");
                     player1.add_money(_player_bet);
                     bank-=_player_bet;
                     end_game_draw();
                 }
-                if (_sum_deck_player1>_sum_deck_player2){
+                else if (_sum_deck_player1>_sum_deck_player2){
                     System.out.println("Vous avez plus de points que le croupier ! Vous recuperer donc votre mise de "+_player_bet+" !");
                     player1.add_money(_player_bet);
                     bank-=_player_bet;
@@ -242,6 +249,7 @@ public class Game {
         System.out.println("Match nul");
     }
     public void end_menu(){
+        Score_hicham
         System.out.println("Rejouer (1)");
         System.out.println("Acceder a votre solde (2)");
         System.out.println("Acceder au socre (3)");
@@ -263,7 +271,8 @@ public class Game {
             case "4":
                 break;
 
-        }
+            }
+        }while (!Objects.equals(user_choice, "1")&&!Objects.equals(user_choice, "2")&&!Objects.equals(user_choice, "3")&&!Objects.equals(user_choice, "4"));
 
     }
     public void assurance(int player_bet){
