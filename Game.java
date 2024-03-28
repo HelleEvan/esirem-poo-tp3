@@ -27,27 +27,29 @@ public class Game {
     }
 
     public void start_game() {
-        int player1_bank = player1.get_money();
         int user_bet=0;
+        player1.get_player_deck().delete_deck();
+        dealer.get_player_deck().delete_deck();
         Scanner player_input = new Scanner(System.in);
         Scanner player_bet = new Scanner(System.in);
 
-        System.out.println("Il vous reste,"+player1_bank+" coins, Voulez vous en miser (y/n): ");
+        System.out.println("Il vous reste,"+player1.get_money()+" coins, Voulez vous en miser (y/n): ");
         String user_response = player_input.nextLine();
         if (user_response.equals("y")) {
             do {
-                System.out.println("Combien voulez vous miser?\nVous pouvez miser à hauteur de: "+player1_bank+" coins");
+                System.out.println("Combien voulez vous miser?\nVous pouvez miser à hauteur de: "+player1.get_money()+" coins");
                 user_bet = player_input.nextInt();
 
-                if(user_bet>player1_bank){
+                if(user_bet>player1.get_money()){
                     System.out.println("Erreur, vous avez trop misé!!!");
                 }
-            } while(user_bet>player1_bank);
-            System.out.println("Vous avez  miser " +user_bet+", le croupier a miser la meme valeur que vous soit, " +user_response+".");
+            } while(user_bet>player1.get_money());
+            System.out.println("Vous avez  miser " +user_bet+", le croupier a miser la meme valeur que vous soit, " +user_bet+".");
             player1.bet(user_bet);
-            player1_bank -= user_bet;
+            //ajout a la bank la mise du joueur et du croupier (qui est la meme que la mise du joueur)
             bank+=user_bet;
-            System.out.println("Il vous reste désormais "+player1_bank+" coins");
+            bank+=user_bet;
+            System.out.println("Il vous reste désormais "+player1.get_money()+" coins");
 
             continue_game(user_bet);
 
@@ -156,9 +158,16 @@ public class Game {
 
         }
 
+        //si le croupier depasse 21 points, le joueur recupere sa mise et celle du croupier
+        if (_sum_deck_player2>21){
+            player1.add_money(bank);
+            bank=0;
+            System.out.println("Vous avez ganger, le croupier a depasser 21 points. Votre solde est: "+ player1.get_money());
+        }
         if (_sum_deck_player1 >21){
             System.out.println("Vous avez plus que 21 points! Vous avez donc perdu votre mise de " +_player_bet+" !");
         }
+
         //les joueurs qui ont 21 points ou moins sans blackjack
         if (_sum_deck_player1<=21 && !player1.get_player_deck().is_blackjack()){
             if (_sum_deck_player2>21){
@@ -180,11 +189,34 @@ public class Game {
                 }
             }
         }
+        end_menu();
     };
     public void end_game_draw(){
         System.out.println("Match nul");
     }
+    public void end_menu(){
+        System.out.println("Rejouer (1)");
+        System.out.println("Acceder a votre solde (2)");
+        System.out.println("Acceder au socre (3)");
+        System.out.println("Quitter (4)");
+        Scanner user_input = new Scanner(System.in);
+        String user_choice = user_input.nextLine();
+        switch (user_choice){
+            case "1":
+                start_game();
+                break;
+            case "2":
+                System.out.println("Voici votre solde : "+player1.get_money());
+                end_menu();
+                break;
+            case "3":
+                break;
+            case "4":
+                break;
 
+        }
+
+    }
     public void assurance(int player_bet){
         //condition sur la premiere carte du croupier
                 Scanner player_response = new Scanner(System.in);
