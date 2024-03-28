@@ -176,10 +176,6 @@ public class Game {
                 if (!player_wants_to_draw && sum_deck_player2 > 17) {
                     end_game(sum_deck_player1, sum_deck_player2, _player_bet);
                 }
-                if (sum_deck_player2 <= 17) {
-                    dealer.draw_card(game_deck);
-                    dealer_draw = true;
-                }
 
                 //recuperation de la taille actuelle du deck des joueurs
                 int size_deck_player = player1.get_player_deck().get_deck().size();
