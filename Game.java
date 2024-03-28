@@ -28,6 +28,8 @@ public class Game {
 
     public void start_game() {
         int user_bet=0;
+        player1.get_player_deck().delete_deck();
+        dealer.get_player_deck().delete_deck();
         Scanner player_input = new Scanner(System.in);
         Scanner player_bet = new Scanner(System.in);
 
@@ -158,7 +160,8 @@ public class Game {
 
         //si le croupier depasse 21 points, le joueur recupere sa mise et celle du croupier
         if (_sum_deck_player2>21){
-            player1.add_money(_player_bet*2);
+            player1.add_money(bank);
+            bank=0;
             System.out.println("Vous avez ganger, le croupier a depasser 21 points. Votre solde est: "+ player1.get_money());
         }
         if (_sum_deck_player1 >21){
@@ -204,6 +207,7 @@ public class Game {
                 break;
             case "2":
                 System.out.println("Voici votre solde : "+player1.get_money());
+                end_menu();
                 break;
             case "3":
                 break;
